@@ -130,6 +130,10 @@ class YOLACT_MODEL():
             show_mask = False
         
 
+        print("mode :" , self.mode) 
+        print("show_mask :", show_mask)
+        print("show_box :", show_box)
+        
         # First, draw the masks on the GPU where we can do it really fast
         # Beware: very fast but possibly unintelligible mask-drawing code ahead
         # I wish I had access to OpenGL or Vulkan but alas, I guess Pytorch tensor operations will have to suffice
