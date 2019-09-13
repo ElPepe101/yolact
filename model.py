@@ -63,6 +63,7 @@ class YOLACT_MODEL():
         cfg.mask_proto_debug = False
         self.color_cache = defaultdict(lambda: {})
         self.threshold = opts['threshold']
+        self.cateogry  = opts['mode']
         
     # Generate an image based on some text.
     def detect(self, img):
@@ -119,10 +120,20 @@ class YOLACT_MODEL():
                     self.color_cache[on_gpu][color_idx] = color
                 return color
 
+        show_mask = True
+        show_box  = True
+
+        if self.cateogry == "mask_only":
+            show_box = False
+
+        if self.cateogry == "box_only":
+            show_mask = False
+        
+
         # First, draw the masks on the GPU where we can do it really fast
         # Beware: very fast but possibly unintelligible mask-drawing code ahead
         # I wish I had access to OpenGL or Vulkan but alas, I guess Pytorch tensor operations will have to suffice
-        if  True and cfg.eval_mask_branch:
+        if  show_mask and cfg.eval_mask_branch:
             # After this, mask is of size [num_dets, h, w, 1]
             masks = masks[:num_dets_to_consider, :, :, None]
             
@@ -148,7 +159,7 @@ class YOLACT_MODEL():
         # Note, make sure this is a uint8 tensor or opencv will not anti alias text for whatever reason
         img_numpy = (img_gpu * 255).byte().cpu().numpy()
         
-        if True:
+        if show_box:
             for j in reversed(range(num_dets_to_consider)):
                 x1, y1, x2, y2 = boxes[j, :]
                 color = get_color(j)

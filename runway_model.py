@@ -49,6 +49,7 @@ from PIL import Image
 setup_options = {
     'threshold': number(min=0, max=1, step=0.1, default=0.3),
     'checkpoint': runway.file(extension='.pth'),
+    'mode': category(choices=["mask_only", "box_only", "both"], default="both"),
 }
 @runway.setup(options=setup_options)
 def setup(opts):
