@@ -37,7 +37,7 @@
 # Import the Runway SDK. Please install it first with
 # `pip install runway-python`.
 import runway
-from runway.data_types import number, text, image, cateogry
+from runway.data_types import number, text, image, category
 from model import  YOLACT_MODEL
 from PIL import Image
 
