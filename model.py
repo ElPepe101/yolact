@@ -63,7 +63,7 @@ class YOLACT_MODEL():
         cfg.mask_proto_debug = False
         self.color_cache = defaultdict(lambda: {})
         self.threshold = opts['threshold']
-        self.cateogry  = opts['mode']
+        self.mode  = opts['mode']
         
     # Generate an image based on some text.
     def detect(self, img):
@@ -123,10 +123,10 @@ class YOLACT_MODEL():
         show_mask = True
         show_box  = True
 
-        if self.cateogry == "mask_only":
+        if self.mode == "mask_only":
             show_box = False
 
-        if self.cateogry == "box_only":
+        if self.mode == "box_only":
             show_mask = False
         
 
