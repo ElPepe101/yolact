@@ -73,9 +73,8 @@ class YOLACT_MODEL():
         batch = FastBaseTransform()(frame.unsqueeze(0))
         preds = self.net(batch)
         print("done.")
-        output_image = self.display(preds, frame, None, None,
+        return self.display(preds, frame, None, None,
                                      undo_transform=False, score_threshold=self.threshold)
-        return output_image
 
     def display(self, dets_out, img, h, w, undo_transform=True, class_color=False, mask_alpha=0.45, top_k = 100, score_threshold = 0.3):
         img_gpu = img / 255.0
@@ -188,4 +187,4 @@ class YOLACT_MODEL():
                     cv2.rectangle(img_numpy, (x1, y1), (x1 + text_w, y1 - text_h - 4), color, -1)
                     cv2.putText(img_numpy, text_str, text_pt, font_face, font_scale, text_color, font_thickness, cv2.LINE_AA)
         
-        return img_numpy        
+        return (img_numpy, boxes, scores)

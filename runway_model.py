@@ -61,14 +61,20 @@ def setup(opts):
 # outputs data types: https://sdk.runwayml.com/en/latest/data_types.html
 @runway.command(name='detect',
                 inputs={ 'input_image': image(width=550, height=550) },
-                outputs={ 'output_image': image(width=550, height=550) })
+                outputs={ 
+                    'output_image': image(width=550, height=550),
+                    'boxes': any,
+                    'scores': any
+                })
 
 def detect(model, args):
     # Generate a PIL or Numpy image based on the input caption, and return it
-    output_image = model.detect(args['input_image'])
+    (img_numpy, boxes, scores) = model.detect(args['input_image'])
     
-    return {  
-        'output_image': output_image
+    return {
+        'output_image': img_numpy,
+        'boxes': boxes,
+        'scores': scores,
     }
 
 if __name__ == '__main__':
